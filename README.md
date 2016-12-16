@@ -1,17 +1,28 @@
 # Elytron client demo
 
+## About
+
 This demo uses WildFly `ModelControllerClient` to show, how to work with an Elytron-enabled WildFly client.
- authentication configuration.
 
-The demo (look into [SimpleClient.java](src/main/java/org/wildfly/security/elytron/SimpleClient.java)) connects to a WildFly server and calls `:whoami` operation twice:
-1. with default AuthenticationContext  (from wildfly-config)
-1. with programmatically created AuthenticationContext
+The demo application ([SimpleClient.java](src/main/java/org/wildfly/security/elytron/SimpleClient.java)) connects to a WildFly server and calls `:whoami` operation twice:
 
-Programmatic configuration contains 2 rules:
-* client connecting to `localhost` hostname is handled as `administrator`
-* any client is handled as `monitor`
+1. with default AuthenticationContext (from `wildfly-config.xml`)
+1. with programmatically created `AuthenticationContext`
 
-The default context is loaded by a discovery mechanism and which can be customized by a system property.
+### wildfly-config.xml
+
+The default context is [loaded](https://github.com/wildfly/wildfly-client-config/blob/master/src/main/java/org/wildfly/client/config/ClientConfiguration.java#L131-L170) by a discovery mechanism ([wildfly-client-config](https://github.com/wildfly/wildfly-client-config) GitHub project) and can be customized by a `wildfly.config.url` system property.
+
+The Elytron part of `wildfly-config.xml` client configuration is described in Elytron XSD (e.g. [version 1.1.0.Beta17](https://github.com/wildfly-security/wildfly-elytron/blob/1.1.0.Beta17/src/main/resources/schema/elytron-1_0.xsd)).
+
+### Elytron API
+
+Entrypoint for programmatic configuration is the class [AuthenticationContext](https://github.com/wildfly-security/wildfly-elytron/blob/1.1.0.Beta17/src/main/java/org/wildfly/security/auth/client/AuthenticationContext.java).
+
+The `AuthenticationContext` instance created in this demo contains following rules:
+
+1. client connecting to `localhost` hostname is handled as `administrator`
+1. any client is handled as `monitor`
 
 ## Prerequisities
 
