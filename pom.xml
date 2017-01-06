@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.org.wildfly.core>3.0.0.Alpha16-SNAPSHOT</version.org.wildfly.core>
+        <version.org.wildfly.core>3.0.0.Alpha17</version.org.wildfly.core>
         <main.class>org.wildfly.security.elytron.SimpleClient</main.class>
     </properties>
 

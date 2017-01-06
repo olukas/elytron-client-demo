@@ -17,7 +17,7 @@ The Elytron part of `wildfly-config.xml` client configuration is described in El
 
 ### Elytron API
 
-Entrypoint for programmatic configuration is the class [AuthenticationContext](https://github.com/wildfly-security/wildfly-elytron/blob/1.1.0.Beta17/src/main/java/org/wildfly/security/auth/client/AuthenticationContext.java).
+Entrypoint for the programmatic Elytron client configuration is the class [AuthenticationContext](https://github.com/wildfly-security/wildfly-elytron/blob/1.1.0.Beta17/src/main/java/org/wildfly/security/auth/client/AuthenticationContext.java).
 
 The `AuthenticationContext` instance created in this demo contains following rules:
 
@@ -26,24 +26,6 @@ The `AuthenticationContext` instance created in this demo contains following rul
 
 ## Prerequisities
 
-### Build WildFly with Elytron integration
-
-As for now (2016-12-15) you need to build WildFly from Elytron integration fork to get the demo working:
-
-```bash
-git clone -b ladybird git@github.com:wildfly-security-incubator/wildfly-core.git
-git clone -b ladybird git@github.com:wildfly-security-incubator/wildfly.git
-cd wildfly-core
-mvn clean install -DskipTests -Dcheckstyle.skip -Denforcer.skip
-WFLY_CORE_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -v '\[')
-cd ../wildfly
-sed -i "s#<version.org.wildfly.core>.*#<version.org.wildfly.core>$WFLY_CORE_VERSION</version.org.wildfly.core>#" pom.xml
-mvn clean install -DskipTests -Dcheckstyle.skip -Denforcer.skip
-
-cp -r dist/target/wildfly-*-SNAPSHOT/ /tmp/wildfly-ladybird
-
-cd /tmp/wildfly-ladybird
-```
 ### Add management users
 
 ```bash
@@ -56,14 +38,6 @@ bin/add-user.sh -u administrator -p password1! -s
 ```bash
 bin/standalone.sh -c standalone-elytron.xml
 ```
-
-### Update version.org.wildfly.core in the project
-If necessary, update the WildFly Core version in the demo project too.
-
-```bash
-sed -i "s#<version.org.wildfly.core>.*#<version.org.wildfly.core>$WFLY_CORE_VERSION</version.org.wildfly.core>#" pom.xml
-```
-
 
 ## Run demo
 
