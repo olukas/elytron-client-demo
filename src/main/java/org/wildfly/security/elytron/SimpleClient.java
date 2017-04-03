@@ -17,24 +17,15 @@
  */
 package org.wildfly.security.elytron;
 
-import java.security.Provider;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.ModelControllerClientConfiguration;
 import org.jboss.dmr.ModelNode;
-import org.wildfly.security.WildFlyElytronProvider;
-import org.wildfly.security.auth.client.AuthenticationConfiguration;
-import org.wildfly.security.auth.client.AuthenticationContext;
-import org.wildfly.security.auth.client.MatchRule;
 
-/**
- * @author <a href="mailto:darran.lofthouse@jboss.com">Darran Lofthouse</a>
- */
 public class SimpleClient {
 
-    
     private static final String LOOPBACK = "127.0.0.1";
     private static final String HOSTNAME = System.getProperty("hostname", LOOPBACK);
 
@@ -63,30 +54,11 @@ public class SimpleClient {
             }
         };
 
-        System.out.println(">>> Demo - default AuthenticationContext (from wildfly-config)");
-        
         runnable.run();
-        
-        System.out.println(">>> Demo - AuthenticationContext created programatically");
-        
-        AuthenticationConfiguration common = AuthenticationConfiguration.EMPTY
-                .useProviders(() -> new Provider[] { new WildFlyElytronProvider() })
-                .allowSaslMechanisms("DIGEST-MD5")
-                .useRealm("ManagementRealm");
 
-
-        AuthenticationContext context = AuthenticationContext.empty();
-        
-        AuthenticationConfiguration administrator = common.useName("administrator").usePassword("password1!");
-        context = context.with(MatchRule.ALL.matchHost("localhost"), administrator);
-        
-        AuthenticationConfiguration monitor = common.useName("monitor").usePassword("password1!");
-        context = context.with(MatchRule.ALL, monitor);
-
-        context.run(runnable);
     }
 
-    
+
     static {
         Logger.getLogger("org").setLevel(Level.WARNING);
     }
